@@ -1,13 +1,25 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="theme-color" content="#ffffff" /> <!-- PWAのテーマカラー -->
+    <meta name="description" content="冷蔵庫みまもるっち - 冷蔵庫の状態を見守るアプリ" />
+    <title>冷蔵庫みまもるっち</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    
+    <!-- PWA マニフェストファイル -->
+    <link rel="manifest" href="./manifest.json" /> <!-- manifest.json のパスを指定 -->
+
+    <!-- 他のメタデータや外部リソース -->
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root"></div> <!-- React アプリケーションのマウントポイント -->
+
+    <!-- Vite が自動的に生成するスクリプト -->
+    <script type="module" src="./src/main.tsx"></script> <!-- React アプリのエントリーポイント -->
   </body>
 </html>
