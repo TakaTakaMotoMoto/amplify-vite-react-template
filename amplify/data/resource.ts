@@ -11,7 +11,7 @@ const schema = a.schema({
   Ingredient: a
     .model({
       name: a.string(),
-      quantity: a.number(),
+      quantity: a.integer(),
       checked: a.boolean(),
     })
     .authorization(allow => [allow.owner()]), // オーナー認証を使用
