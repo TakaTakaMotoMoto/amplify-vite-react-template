@@ -1,10 +1,13 @@
-import { RouterProvider } from "react-router-dom";
-import router from "./configs/Router";
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import router from './configs/Router'; // Router.tsx から router をインポート
 
-function App() {
+const App: React.FC = () => {
   return (
-    <RouterProvider router={router} />
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
-}
+};
 
 export default App;
