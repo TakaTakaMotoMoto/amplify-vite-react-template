@@ -11,15 +11,23 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.9",
+    "@aws-amplify/data-schema": "^1.13.0",
     "@aws-amplify/ui-react": "^6.5.5",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@jridgewell/sourcemap-codec": "^1.5.0",
     "@mui/icons-material": "^6.1.6",
+    "@types/react-router-dom": "^5.3.3",
     "aws-amplify": "^6.6.6",
     "graphql": "^15.9.0",
+    "json-schema-to-ts": "^3.1.1",
     "lru-cache": "^11.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rimraf": "^6.0.1"
+    "react-router-dom": "^6.28.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.25.0",
+    "ts-algebra": "^2.0.0"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.5.0",
