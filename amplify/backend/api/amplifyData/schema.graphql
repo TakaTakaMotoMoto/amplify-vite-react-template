@@ -1,0 +1,247 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Ingredient @aws_cognito_user_pools @aws_iam {
+  checked: Boolean
+  createdAt: AWSDateTime!
+  id: ID!
+  name: String
+  owner: String
+  quantity: Int
+  updatedAt: AWSDateTime!
+}
+
+type ModelIngredientConnection @aws_cognito_user_pools @aws_iam {
+  items: [Ingredient]!
+  nextToken: String
+}
+
+type Mutation {
+  createIngredient(condition: ModelIngredientConditionInput, input: CreateIngredientInput!): Ingredient @aws_cognito_user_pools @aws_iam
+  deleteIngredient(condition: ModelIngredientConditionInput, input: DeleteIngredientInput!): Ingredient @aws_cognito_user_pools @aws_iam
+  updateIngredient(condition: ModelIngredientConditionInput, input: UpdateIngredientInput!): Ingredient @aws_cognito_user_pools @aws_iam
+}
+
+type Query {
+  getIngredient(id: ID!): Ingredient @aws_cognito_user_pools @aws_iam
+  listIngredients(filter: ModelIngredientFilterInput, limit: Int, nextToken: String): ModelIngredientConnection @aws_cognito_user_pools @aws_iam
+}
+
+type Subscription {
+  onCreateIngredient(filter: ModelSubscriptionIngredientFilterInput, owner: String): Ingredient @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["createIngredient"])
+  onDeleteIngredient(filter: ModelSubscriptionIngredientFilterInput, owner: String): Ingredient @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["deleteIngredient"])
+  onUpdateIngredient(filter: ModelSubscriptionIngredientFilterInput, owner: String): Ingredient @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["updateIngredient"])
+}
+
+enum ModelAttributeTypes {
+  _null
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input ConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input CreateIngredientInput {
+  checked: Boolean
+  id: ID
+  name: String
+  quantity: Int
+}
+
+input DeleteIngredientInput {
+  id: ID!
+}
+
+input ModelBooleanInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelFloatInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input ModelIDInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input ModelIngredientConditionInput {
+  and: [ModelIngredientConditionInput]
+  checked: ModelBooleanInput
+  createdAt: ModelStringInput
+  name: ModelStringInput
+  not: ModelIngredientConditionInput
+  or: [ModelIngredientConditionInput]
+  owner: ModelStringInput
+  quantity: ModelIntInput
+  updatedAt: ModelStringInput
+}
+
+input ModelIngredientFilterInput {
+  and: [ModelIngredientFilterInput]
+  checked: ModelBooleanInput
+  createdAt: ModelStringInput
+  id: ModelIDInput
+  name: ModelStringInput
+  not: ModelIngredientFilterInput
+  or: [ModelIngredientFilterInput]
+  owner: ModelStringInput
+  quantity: ModelIntInput
+  updatedAt: ModelStringInput
+}
+
+input ModelIntInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelStringInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionBooleanInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelSubscriptionFloatInput {
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  in: [Float]
+  le: Float
+  lt: Float
+  ne: Float
+  notIn: [Float]
+}
+
+input ModelSubscriptionIDInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  in: [ID]
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  notIn: [ID]
+}
+
+input ModelSubscriptionIngredientFilterInput {
+  and: [ModelSubscriptionIngredientFilterInput]
+  checked: ModelSubscriptionBooleanInput
+  createdAt: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  or: [ModelSubscriptionIngredientFilterInput]
+  owner: ModelStringInput
+  quantity: ModelSubscriptionIntInput
+  updatedAt: ModelSubscriptionStringInput
+}
+
+input ModelSubscriptionIntInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  in: [Int]
+  le: Int
+  lt: Int
+  ne: Int
+  notIn: [Int]
+}
+
+input ModelSubscriptionStringInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  in: [String]
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  notIn: [String]
+}
+
+input UpdateIngredientInput {
+  checked: Boolean
+  id: ID!
+  name: String
+  quantity: Int
+}
