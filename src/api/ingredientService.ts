@@ -1,11 +1,10 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import {
-  GET_INGREDIENTS,
+import {GET_INGREDIENTS} from '../graphql/queries';
+import{  
   CREATE_INGREDIENT,
   UPDATE_INGREDIENT_CHECK,
   UPDATE_INGREDIENT_QUANTITY,
-  DELETE_INGREDIENT,
-} from '../graphql/queries';
+  DELETE_INGREDIENT} from '../graphql/mutations';
 
 // Apollo Clientの設定
 const client = new ApolloClient({
