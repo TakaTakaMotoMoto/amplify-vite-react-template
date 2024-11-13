@@ -27,7 +27,7 @@ export const getIngredientList = async (): Promise<Ingredient[]> => {
 export const postCreateIngredient = async (name: string, quantity: number) => {
   const { data } = await client.mutate({
     mutation: CREATE_INGREDIENT,
-    variables: { name, quantity },
+    variables: { name, quantity,checked: false},
   });
   return data.createIngredient;
 };

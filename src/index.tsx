@@ -6,7 +6,7 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports'; // Amplify 設定ファイル
 import App from './App';
 import '@aws-amplify/ui-react/styles.css'; // Authenticator 用のスタイルをインポート
-import './index.css';
+import './style/tailwind.css';
 
 // Amplify 設定
 Amplify.configure(awsconfig); // aws-exports を使用
