@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react';
 import {VitePWA} from 'vite-plugin-pwa'; // PWA プラグインのインポート
 
 export default defineConfig({
+  optimizeDeps: {
+    include: ['@emotion/react', '@emotion/styled'],
+  },
   server: {
     host: '0.0.0.0', // スマホや他の端末からアクセス可能にする設定
     port: 3000,
