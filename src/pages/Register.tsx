@@ -10,19 +10,33 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../../amplify/data/resource';
+
+const client = generateClient<Schema>()
 
 const Register: React.FC = () => {
-  const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
+  //const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
+  const [ingredientList, setIngredientList] = useState<Schema["Ingredient"]["type"][]>([]);
   const [ingredientName, setIngredientName] = useState<string>('');
   const [ingredientQuantity, setIngredientQuantity] = useState<number | string>('');
   const [error, setError] = useState<string>('');
 
+  const fetchIngredientList = async () => {
+    const {data: items, errors} = await client.models.Ingredient.list();
+    setIngredientList(items);
+  };
+
   useEffect(() => {
+    fetchIngredientList();
+  }, []);
+
+  /*useEffect(() => {
     (async () => {
       const list = await getIngredientList();
       setIngredientList(list);
     })();
-  }, []);
+  }, []);*/
 
   // 入力フォームの変更処理
   const handleIngredientNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +78,7 @@ const Register: React.FC = () => {
     }
 
     await postCreateIngredient(ingredientName, parsedQuantity);
-    setIngredientList(await getIngredientList());
+    //setIngredientList(await getIngredientList());
     setIngredientName('');
     setIngredientQuantity('');
   };
@@ -105,6 +119,20 @@ const Register: React.FC = () => {
     );
   };
 
+  const createIngredient = async () => {
+    console.log("追加ボタン押された");
+    try {
+      const result = await client.models.Ingredient.create({
+        name: "じゃがいも",
+        quantity: 3,
+        checked: false,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("作成に失敗しました:", error);
+    }
+  };
+
   return (
     <Container maxWidth="xs">
       <Box display="flex" justifyContent="space-between" mt={4} mb={4}>
@@ -122,7 +150,8 @@ const Register: React.FC = () => {
           value={ingredientQuantity}
           onChange={handleIngredientQuantityChange}
         />
-        <Button variant="contained" color="primary" onClick={handleCreateIngredient}>
+        {/* </Button>*<Button variant="contained" color="primary" onClick={handleCreateIngredient}> */}
+        <Button variant="contained" color="primary" onClick={createIngredient}>
           作成
         </Button>
         {error && (
