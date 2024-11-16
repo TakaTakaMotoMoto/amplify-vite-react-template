@@ -146,9 +146,19 @@ const Register: React.FC = () => {
   };
 
   // 具材の削除
-  const handleDeleteIngredient = (id: string) => {
+  const handleDeleteIngredient = async (id: string) => {
     setIngredientList((prevList) => prevList.filter((ingredient) => ingredient.id !== id));
-    deleteIngredient(id);
+    //deleteIngredient(id);
+    // ↑の代わりに以下で代用
+    console.log("削除ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.delete({
+        id: id,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("具材の削除に失敗しました:", error)
+    }
   };
 
   // ingredientListの更新処理を共通化
