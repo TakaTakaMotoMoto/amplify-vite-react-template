@@ -109,9 +109,20 @@ const Register: React.FC = () => {
   };
 
   // 具材の数量を更新
-  const updateIngredientQuantity = (id: string, quantity: number) => {
+  const updateIngredientQuantity = async (id: string, quantity: number) => {
     updateIngredientList(id, { quantity });
-    patchIngredientQuantity(id, quantity);
+    //patchIngredientQuantity(id, quantity);
+    // ↑の代わりに以下で代用
+    console.log("数量変更ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.update({
+        id: id,
+        quantity: quantity,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("数量の更新に失敗しました:", error)
+    }
   };
 
   // 具材の数量を増減
