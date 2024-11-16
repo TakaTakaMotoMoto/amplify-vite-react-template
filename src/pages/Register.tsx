@@ -97,6 +97,7 @@ const Register: React.FC = () => {
     //setIngredientList(await getIngredientList());
     setIngredientName('');
     setIngredientQuantity('');
+    fetchIngredientList();
   };
 
   // 具材のチェック状態を更新
