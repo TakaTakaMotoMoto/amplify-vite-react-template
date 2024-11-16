@@ -24,6 +24,9 @@ const Register: React.FC = () => {
 
   const fetchIngredientList = async () => {
     const {data: items, errors} = await client.models.Ingredient.list();
+    if (errors) {
+      console.error("具材一覧を取得中にエラーが発生しました。:", errors)
+    }
     setIngredientList(items);
   };
 
