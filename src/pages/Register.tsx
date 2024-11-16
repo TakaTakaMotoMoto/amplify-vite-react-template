@@ -101,11 +101,22 @@ const Register: React.FC = () => {
   };
 
   // 具材のチェック状態を更新
-  const handleCheckIngredient = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckIngredient = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const ingredientId = e.target.value;
     const checked = e.target.checked;
     updateIngredientList(ingredientId, { checked });
-    patchCheckIngredient(ingredientId, checked);
+    //patchCheckIngredient(ingredientId, checked);
+    // ↑の代わりに以下で代用
+    console.log("チェック更新ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.update({
+        id: ingredientId,
+        checked: checked,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("チェック状態の更新に失敗しました:", error)
+    }
   };
 
   // 具材の数量を更新
