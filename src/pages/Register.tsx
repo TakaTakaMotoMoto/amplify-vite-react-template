@@ -9,7 +9,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
+//import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
+import { patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 
