@@ -34,7 +34,7 @@ export const postCreateIngredient = async (name: string, quantity: number) => {
 };
 
 // 材料のチェック状態を更新する
-export const patchCheckIngredient = async (id: number, checked: boolean) => {
+export const patchCheckIngredient = async (id: string, checked: boolean) => {
   const { data } = await client.mutate({
     mutation: UPDATE_INGREDIENT_CHECK,
     variables: { id, checked },
@@ -43,7 +43,7 @@ export const patchCheckIngredient = async (id: number, checked: boolean) => {
 };
 
 // 材料の数量を更新する
-export const patchIngredientQuantity = async (id: number, quantity: number) => {
+export const patchIngredientQuantity = async (id: string, quantity: number) => {
   const { data } = await client.mutate({
     mutation: UPDATE_INGREDIENT_QUANTITY,
     variables: { id, quantity },
@@ -52,7 +52,7 @@ export const patchIngredientQuantity = async (id: number, quantity: number) => {
 };
 
 // 材料を削除する
-export const deleteIngredient = async (id: number) => {
+export const deleteIngredient = async (id: string) => {
   const { data } = await client.mutate({
     mutation: DELETE_INGREDIENT,
     variables: { id },
@@ -62,7 +62,7 @@ export const deleteIngredient = async (id: number) => {
 
 // Ingredientの型定義
 export interface Ingredient {
-  id: number;
+  id: string;
   name: string;
   quantity: number;
   checked: boolean;

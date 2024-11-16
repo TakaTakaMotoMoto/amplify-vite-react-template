@@ -100,20 +100,20 @@ const Register: React.FC = () => {
 
   // 具材のチェック状態を更新
   const handleCheckIngredient = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const ingredientId = Number(e.target.value);
+    const ingredientId = e.target.value;
     const checked = e.target.checked;
     updateIngredientList(ingredientId, { checked });
     patchCheckIngredient(ingredientId, checked);
   };
 
   // 具材の数量を更新
-  const updateIngredientQuantity = (id: number, quantity: number) => {
+  const updateIngredientQuantity = (id: string, quantity: number) => {
     updateIngredientList(id, { quantity });
     patchIngredientQuantity(id, quantity);
   };
 
   // 具材の数量を増減
-  const handleQuantityChange = (id: number, increment: boolean) => {
+  const handleQuantityChange = (id: string, increment: boolean) => {
     const ingredient = ingredientList.find((ingredient) => ingredient.id === id);
     if (ingredient) {
       const newQuantity = increment ? Math.min(ingredient.quantity + 1, 100) : Math.max(ingredient.quantity - 1, 1);
@@ -122,13 +122,13 @@ const Register: React.FC = () => {
   };
 
   // 具材の削除
-  const handleDeleteIngredient = (id: number) => {
+  const handleDeleteIngredient = (id: string) => {
     setIngredientList((prevList) => prevList.filter((ingredient) => ingredient.id !== id));
     deleteIngredient(id);
   };
 
   // ingredientListの更新処理を共通化
-  const updateIngredientList = (id: number, updatedFields: Partial<Ingredient>) => {
+  const updateIngredientList = (id: string, updatedFields: Partial<Ingredient>) => {
     setIngredientList((prevList) =>
       prevList.map((ingredient) => (ingredient.id === id ? { ...ingredient, ...updatedFields } : ingredient))
     );
