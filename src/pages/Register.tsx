@@ -9,8 +9,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-//import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
-import {postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
+import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 
@@ -24,7 +23,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState<string>('');
 
   const fetchIngredientList = async () => {
-    const {data: items} = await client.models.Ingredient.list();
+    const {data: items, errors} = await client.models.Ingredient.list();
     setIngredientList(items);
   };
 
@@ -100,26 +99,25 @@ const Register: React.FC = () => {
 
   // 具材の数量を増減
   const handleQuantityChange = (id: number, increment: boolean) => {
-    const ingredient = ingredientList.find((ingredient) => String(ingredient.id) === String(id));
+    const ingredient = ingredientList.find((ingredient) => ingredient.id === id);
     if (ingredient) {
-      const newQuantity = increment ? Math.min((ingredient.quantity ?? 0) + 1, 100) : Math.max((ingredient.quantity ?? 1) - 1, 1);
+      const newQuantity = increment ? Math.min(ingredient.quantity + 1, 100) : Math.max(ingredient.quantity - 1, 1);
       updateIngredientQuantity(id, newQuantity);
     }
   };
 
   // 具材の削除
   const handleDeleteIngredient = (id: number) => {
-    setIngredientList((prevList) => prevList.filter((ingredient) => String(ingredient.id) !== String(id)));
+    setIngredientList((prevList) => prevList.filter((ingredient) => ingredient.id !== id));
     deleteIngredient(id);
   };
 
   // ingredientListの更新処理を共通化
-  const updateIngredientList = (id: string | number, updatedFields: Partial<Ingredient>) => {
+  const updateIngredientList = (id: number, updatedFields: Partial<Ingredient>) => {
     setIngredientList((prevList) =>
-      prevList.map((ingredient) => (ingredient.id === id ? { ...ingredient, ...updatedFields } : ingredient) as Schema["Ingredient"]["type"])
+      prevList.map((ingredient) => (ingredient.id === id ? { ...ingredient, ...updatedFields } : ingredient))
     );
   };
-  
 
   const createIngredient = async () => {
     console.log("追加ボタン押された");
@@ -132,7 +130,6 @@ const Register: React.FC = () => {
       console.log("成功しました:", result);
     } catch (error) {
       console.error("作成に失敗しました:", error);
-      error = handleCreateIngredient;
     }
   };
 
@@ -177,16 +174,16 @@ const Register: React.FC = () => {
               label={ingredient.name}
             />
             <Box display="flex" alignItems="center" ml="auto">
-              <Button variant="outlined" onClick={() => handleQuantityChange(Number(ingredient.id), false)}>
+              <Button variant="outlined" onClick={() => handleQuantityChange(ingredient.id, false)}>
                 -
               </Button>
               <Typography variant="body1" style={{ width: 60, textAlign: 'center' }}>
                 {ingredient.quantity} 個
               </Typography>
-              <Button variant="outlined" onClick={() => handleQuantityChange(Number(ingredient.id), true)}>
+              <Button variant="outlined" onClick={() => handleQuantityChange(ingredient.id, true)}>
                 +
               </Button>
-              <IconButton color="secondary" onClick={() => handleDeleteIngredient(Number(ingredient.id))}>
+              <IconButton color="secondary" onClick={() => handleDeleteIngredient(ingredient.id)}>
                 <DeleteIcon />
               </IconButton>
             </Box>
