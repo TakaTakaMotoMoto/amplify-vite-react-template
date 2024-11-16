@@ -80,7 +80,19 @@ const Register: React.FC = () => {
       return;
     }
 
-    await postCreateIngredient(ingredientName, parsedQuantity);
+    //await postCreateIngredient(ingredientName, parsedQuantity);
+    // ↑の代わりに以下で代用
+    console.log("追加ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.create({
+        name: ingredientName,
+        quantity: parsedQuantity,
+        checked: false,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("作成に失敗しました:", error);
+    }
     //setIngredientList(await getIngredientList());
     setIngredientName('');
     setIngredientQuantity('');
@@ -122,20 +134,6 @@ const Register: React.FC = () => {
     );
   };
 
-  const createIngredient = async () => {
-    console.log("追加ボタン押された");
-    try {
-      const result = await client.models.Ingredient.create({
-        name: "じゃがいも",
-        quantity: 3,
-        checked: false,
-      });
-      console.log("成功しました:", result);
-    } catch (error) {
-      console.error("作成に失敗しました:", error);
-    }
-  };
-
   return (
     <Container maxWidth="xs">
       <Box display="flex" justifyContent="space-between" mt={4} mb={4}>
@@ -154,7 +152,7 @@ const Register: React.FC = () => {
           onChange={handleIngredientQuantityChange}
         />
         {/* </Button>*<Button variant="contained" color="primary" onClick={handleCreateIngredient}> */}
-        <Button variant="contained" color="primary" onClick={createIngredient}>
+        <Button variant="contained" color="primary" onClick={handleCreateIngredient}>
           作成
         </Button>
         {error && (
