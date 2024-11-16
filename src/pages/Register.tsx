@@ -115,7 +115,7 @@ const Register: React.FC = () => {
   // 具材の数量を増減
   const handleQuantityChange = (id: string, increment: boolean) => {
     const ingredient = ingredientList.find((ingredient) => ingredient.id === id);
-    if (ingredient) {
+    if (ingredient && ingredient.quantity !== undefined && ingredient.quantity !== null) {
       const newQuantity = increment ? Math.min(ingredient.quantity + 1, 100) : Math.max(ingredient.quantity - 1, 1);
       updateIngredientQuantity(id, newQuantity);
     }
