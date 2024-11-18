@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 //import { getIngredientList, postCreateIngredient, patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
-import { patchCheckIngredient, patchIngredientQuantity, deleteIngredient, Ingredient } from '../api/ingredientService';
+import { Ingredient } from '../api/ingredientService';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 
@@ -101,17 +101,39 @@ const Register: React.FC = () => {
   };
 
   // 具材のチェック状態を更新
-  const handleCheckIngredient = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckIngredient = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const ingredientId = e.target.value;
     const checked = e.target.checked;
     updateIngredientList(ingredientId, { checked });
-    patchCheckIngredient(ingredientId, checked);
+    //patchCheckIngredient(ingredientId, checked);
+    // ↑の代わりに以下で代用
+    console.log("チェック更新ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.update({
+        id: ingredientId,
+        checked: checked,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("チェック状態の更新に失敗しました:", error)
+    }
   };
 
   // 具材の数量を更新
-  const updateIngredientQuantity = (id: string, quantity: number) => {
+  const updateIngredientQuantity = async (id: string, quantity: number) => {
     updateIngredientList(id, { quantity });
-    patchIngredientQuantity(id, quantity);
+    //patchIngredientQuantity(id, quantity);
+    // ↑の代わりに以下で代用
+    console.log("数量変更ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.update({
+        id: id,
+        quantity: quantity,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("数量の更新に失敗しました:", error)
+    }
   };
 
   // 具材の数量を増減
@@ -124,9 +146,19 @@ const Register: React.FC = () => {
   };
 
   // 具材の削除
-  const handleDeleteIngredient = (id: string) => {
+  const handleDeleteIngredient = async (id: string) => {
     setIngredientList((prevList) => prevList.filter((ingredient) => ingredient.id !== id));
-    deleteIngredient(id);
+    //deleteIngredient(id);
+    // ↑の代わりに以下で代用
+    console.log("削除ボタンが押されました");
+    try {
+      const result = await client.models.Ingredient.delete({
+        id: id,
+      });
+      console.log("成功しました:", result);
+    } catch (error) {
+      console.error("具材の削除に失敗しました:", error)
+    }
   };
 
   // ingredientListの更新処理を共通化
