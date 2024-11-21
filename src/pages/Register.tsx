@@ -168,6 +168,16 @@ const Register: React.FC = () => {
     );
   };
 
+  const handleSayHello = async () => {
+    try {
+      const result = await client.queries.sayHello({
+        name: "Amplify"
+      })
+    } catch (error) {
+      console.error("エラーが発生しました:", error)
+    }
+  }
+
   return (
     <Container maxWidth="xs">
       <Box display="flex" justifyContent="space-between" mt={4} mb={4}>
@@ -225,6 +235,11 @@ const Register: React.FC = () => {
           </Box>
         ))}
       </FormGroup>
+      <Box mt={2}>  
+        <Button variant="contained" color="secondary" onClick={handleSayHello}>  
+          Say Hello  
+        </Button>  
+      </Box>  
     </Container>
   );
 };
