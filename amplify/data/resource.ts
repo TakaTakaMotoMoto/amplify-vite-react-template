@@ -1,5 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-import { sayHello } from "./functions/say-hello/resource";
+import { sayHello } from "../functions/say-hello/resource";
 
 /*== STEP 1 ===============================================================
 The section below creates an Ingredient database table with a "name" and 
