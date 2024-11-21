@@ -22,7 +22,8 @@ const schema = a.schema({
       name: a.string(),
     })
     .returns(a.string())
-    .handler(a.handler.function(sayHello)),
+    .handler(a.handler.function(sayHello))
+    .authorization(allow => [allow.owner()]), // パブリック認証を使用
 });
 
 export type Schema = ClientSchema<typeof schema>;

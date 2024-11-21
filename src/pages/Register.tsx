@@ -173,6 +173,7 @@ const Register: React.FC = () => {
       const result = await client.queries.sayHello({
         name: "Amplify"
       })
+      console.log("成功しました:", result)
     } catch (error) {
       console.error("エラーが発生しました:", error)
     }
